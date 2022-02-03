@@ -5,7 +5,7 @@ class ProfileEdit extends Component {
   render() {
     return (
       <div>
-        <h1>ProfileEdit</h1>
+        <h1>ProfileEdit ✏️</h1>
       </div>
     );
   }
