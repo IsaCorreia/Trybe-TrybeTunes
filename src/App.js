@@ -13,9 +13,9 @@ class App extends React.Component {
   render() {
     return (
       <>
-        {/* <Header /> */}
         <p>TrybeTunes</p>
         <BrowserRouter>
+          {/* <Switch> */}
           <div data-testid="page-login">
             <Route exact path="/" component={ Login } />
           </div>
@@ -43,6 +43,7 @@ class App extends React.Component {
           <div data-testid="page-not-found">
             <Route path="*" component={ NotFound } />
           </div>
+          {/* </Switch> */}
         </BrowserRouter>
       </>
     );
