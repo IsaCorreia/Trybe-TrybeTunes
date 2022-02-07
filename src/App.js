@@ -10,13 +10,36 @@ import ProfileEdit from './pages/ProfileEdit';
 import Search from './pages/Search';
 
 class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      isButtonDisabled: true,
+    };
+
+    this.onNameInputChange = this.onNameInputChange.bind(this);
+  }
+
+  onNameInputChange = (event) => {
+    const { value } = event.target;
+    const MIN_STRING_LENGTH = 3;
+    const buttonState = !(value.length >= MIN_STRING_LENGTH || false);
+    this.setState({ isButtonDisabled: buttonState });
+  };
+
   render() {
     return (
       <>
         <p>TrybeTunes</p>
         <BrowserRouter>
           {/* <Switch> */}
-          <Route exact path="/" component={ Login } />
+          <Route
+            exact
+            path="/"
+            render={ () => (
+              <Login { ...this.state } onNameInputChange={ this.onNameInputChange } />
+            ) }
+          />
 
           <Route path="/search" component={ Search } />
 
