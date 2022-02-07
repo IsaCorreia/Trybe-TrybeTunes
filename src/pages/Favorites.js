@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class Favorites extends Component {
   render() {
     return (
-      <div>
+      <div data-testid="page-favorites">
         <h1>Favoritos ⭐</h1>
       </div>
     );

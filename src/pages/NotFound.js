@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 class NotFound extends Component {
   render() {
     return (
-      <div>
+      <div data-testid="page-not-found">
         <h1>NotFound 4️⃣0️⃣4️⃣</h1>
       </div>
     );

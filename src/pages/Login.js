@@ -20,7 +20,7 @@ class Login extends Component {
     // Recebe input do campo text,
     const { value: input } = event.target;
     const MIN_STRING_LENGTH = 3;
-    
+
     // Caso o seu comprimento (string) seja maior que 3
     if (input.length >= MIN_STRING_LENGTH) {
       // Ativa os estados que controlam
@@ -44,31 +44,29 @@ class Login extends Component {
       .then(this.setState({ isUserOk: true }));
   }
 
-  redirectPage = () => {
-    return <Redirect to="/search" />
-  }
+  redirectPage = () => <Redirect to="/search" />
 
   render() {
     const { isButtonDisabled, isLoading, isUserOk } = this.state;
     return (
-      <form>
+      <div data-testid="page-login">
         <h1>Login 🔑</h1>
         <input
           data-testid="login-name-input"
           type="text"
-          onChange={this.inputHandler}
+          onChange={ this.inputHandler }
         />
         <button
           data-testid="login-submit-button"
           type="button"
-          disabled={isButtonDisabled}
-          onClick={this.onClickHandler}
+          disabled={ isButtonDisabled }
+          onClick={ this.onClickHandler }
         >
           Entrar
         </button>
         {isLoading ? <Loading /> : null}
         {isUserOk ? this.redirectPage() : null}
-      </form>
+      </div>
     );
   }
 }
