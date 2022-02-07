@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 class Login extends Component {
   render() {
-    const { onNameInputChange, isButtonDisabled } = this.props;
+    const { onNameInputChange, isButtonDisabled, onButtonClick } = this.props;
     return (
       <div data-testid="page-login">
         <h1>Login 🔑</h1>
@@ -16,6 +16,7 @@ class Login extends Component {
           data-testid="login-submit-button"
           type="button"
           disabled={ isButtonDisabled }
+          onClick={ onButtonClick }
         >
           Entrar
         </button>
@@ -27,6 +28,7 @@ class Login extends Component {
 Login.propTypes = {
   onNameInputChange: PropTypes.func.isRequired,
   isButtonDisabled: PropTypes.bool.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
 };
 
 export default Login;
