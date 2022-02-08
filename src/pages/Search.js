@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Search extends Component {
   render() {
     return (
       <div data-testid="page-search">
+        <Header />
         <h1>Search 🔎</h1>
       </div>
     );
   }
 }
 
-// Search.propTypes = {
+Search.propTypes = {
 
-// };
+};
 
 export default Search;
