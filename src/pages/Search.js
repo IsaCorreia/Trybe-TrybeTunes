@@ -1,9 +1,12 @@
 import { nanoid } from 'nanoid';
+import propTypes from 'prop-types';
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import SearchResults from '../components/SearchResults';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Loading from './Loading';
+
+const NO_RESULTS_FOUND = 'Nenhum álbum foi encontrado';
 
 class Search extends Component {
   state = {
@@ -11,6 +14,11 @@ class Search extends Component {
     loading: false,
     searchInputValue: '',
   };
+
+  componentDidMount() {
+    const { seeMoreOnClick } = this.props;
+    this.setState(seeMoreOnClick);
+  }
 
   onNameInputChange = (event) => {
     const { value } = event.target;
@@ -26,7 +34,7 @@ class Search extends Component {
     const { searchInputValue } = this.state;
     this.setState({ loading: true });
     let searchResults = await searchAlbumsAPI(searchInputValue);
-    if (searchResults.length === 0) (searchResults = 'Nenhum álbum foi encontrado');
+    if (searchResults.length === 0) searchResults = NO_RESULTS_FOUND;
     this.setState({
       results: true,
       searchResults,
@@ -38,11 +46,16 @@ class Search extends Component {
 
   rendersSearchResults = () => {
     const { searchResults } = this.state;
-    if (searchResults === 'Nenhum álbum foi encontrado') {
+    const { seeMoreOnClick } = this.props;
+    if (searchResults === NO_RESULTS_FOUND) {
       return <p>Nenhum álbum foi encontrado</p>;
     }
     return searchResults.map((item) => (
-      <SearchResults key={ nanoid() } { ...item } />
+      <SearchResults
+        key={ nanoid() }
+        { ...item }
+        seeMoreOnClick={ seeMoreOnClick }
+      />
     ));
   };
 
@@ -76,17 +89,18 @@ class Search extends Component {
           <>
             <p>
               Resultado de álbuns de:
-              {' '}
               {artist}
             </p>
-            <div className="search-results">
-              {this.rendersSearchResults()}
-            </div>
+            <div className="search-results">{this.rendersSearchResults()}</div>
           </>
         )}
       </div>
     );
   }
 }
+
+Search.propTypes = {
+  seeMoreOnClick: propTypes.func.isRequired,
+};
 
 export default Search;

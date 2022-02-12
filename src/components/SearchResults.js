@@ -4,7 +4,13 @@ import { Link } from 'react-router-dom';
 
 class SearchResults extends Component {
   render() {
-    const { artistName, collectionId, collectionName, artworkUrl100 } = this.props;
+    const {
+      artistName,
+      collectionId,
+      collectionName,
+      artworkUrl100,
+      seeMoreOnClick,
+    } = this.props;
     return (
       <div className="album-card">
         <img src={ artworkUrl100 } alt={ `capa do álbum ${collectionName}` } />
@@ -13,6 +19,7 @@ class SearchResults extends Component {
         <Link
           data-testid={ `link-to-album-${collectionId}` }
           to={ `/album/${collectionId}` }
+          onClick={ () => seeMoreOnClick(collectionId) }
         >
           Ver mais
         </Link>
@@ -23,9 +30,10 @@ class SearchResults extends Component {
 
 SearchResults.propTypes = {
   artistName: propTypes.string.isRequired,
-  collectionId: propTypes.string.isRequired,
+  collectionId: propTypes.number.isRequired,
   collectionName: propTypes.string.isRequired,
   artworkUrl100: propTypes.string.isRequired,
+  seeMoreOnClick: propTypes.func.isRequired,
 };
 
 export default SearchResults;

@@ -42,19 +42,25 @@ class App extends React.Component {
 
     this.setState(
       () => ({ userName: newUser, loading: false }),
-      () => { this.setState({ redirect: true }); },
+      () => {
+        this.setState({ redirect: true });
+      },
     );
+  };
+
+  seeMoreOnClick = (collectionId) => {
+    this.setState({ collectionId });
   };
 
   renderRedirect = () => <Redirect to="/search" />;
 
   render() {
-    const { loading, redirect } = this.state;
+    const { loading, redirect, collectionId } = this.state;
 
     return (
       <BrowserRouter>
-        { loading && <Loading />}
-        { redirect && this.renderRedirect() }
+        {loading && <Loading />}
+        {redirect && this.renderRedirect()}
         <Switch>
           <Route
             exact
@@ -68,9 +74,15 @@ class App extends React.Component {
             ) }
           />
 
-          <Route path="/search" component={ Search } />
+          <Route
+            path="/search"
+            render={ () => <Search seeMoreOnClick={ this.seeMoreOnClick } /> }
+          />
 
-          <Route path="/album/:id" component={ Album } />
+          <Route
+            path="/album/:id"
+            render={ () => <Album collectionId={ collectionId } /> }
+          />
 
           <Route path="/favorites" component={ Favorites } />
 
