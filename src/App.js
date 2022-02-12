@@ -49,7 +49,7 @@ class App extends React.Component {
   renderRedirect = () => <Redirect to="/search" />;
 
   render() {
-    const { loading, redirect, userName } = this.state;
+    const { loading, redirect } = this.state;
 
     return (
       <BrowserRouter>
@@ -68,7 +68,7 @@ class App extends React.Component {
             ) }
           />
 
-          <Route path="/search" component={ () => <Search userName={ userName } /> } />
+          <Route path="/search" component={ Search } />
 
           <Route path="/album/:id" component={ Album } />
 

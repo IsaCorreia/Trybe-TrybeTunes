@@ -33,7 +33,9 @@ class Header extends Component {
         {loading && <Loading />}
         {!loading && (
           <>
-            <Link to="/">Voltar</Link>
+            <Link to="/search" data-testid="link-to-search">Pesquisar</Link>
+            <Link to="/favorites" data-testid="link-to-favorites">Favoritos</Link>
+            <Link to="/profile" data-testid="link-to-profile">Perfil</Link>
             <p data-testid="header-user-name">
               Olá,
               {userName}
@@ -44,7 +46,5 @@ class Header extends Component {
     );
   }
 }
-
-Header.propTypes = {};
 
 export default Header;
