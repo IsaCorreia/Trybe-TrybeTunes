@@ -23,10 +23,6 @@ class App extends React.Component {
       loading: false,
       redirect: false,
     };
-
-    this.onNameInputChange = this.onNameInputChange.bind(this);
-    this.onButtonClick = this.onButtonClick.bind(this);
-    this.renderRedirect = this.renderRedirect.bind(this);
   }
 
   onNameInputChange = (event) => {
@@ -53,41 +49,38 @@ class App extends React.Component {
   renderRedirect = () => <Redirect to="/search" />;
 
   render() {
-    const { loading, redirect } = this.state;
+    const { loading, redirect, userName } = this.state;
 
     return (
-      <>
-        <p>TrybeTunes</p>
-        <BrowserRouter>
-          { loading && <Loading />}
-          { redirect && this.renderRedirect() }
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={ () => (
-                <Login
-                  { ...this.state }
-                  onNameInputChange={ this.onNameInputChange }
-                  onButtonClick={ this.onButtonClick }
-                />
-              ) }
-            />
+      <BrowserRouter>
+        { loading && <Loading />}
+        { redirect && this.renderRedirect() }
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={ () => (
+              <Login
+                { ...this.state }
+                onNameInputChange={ this.onNameInputChange }
+                onButtonClick={ this.onButtonClick }
+              />
+            ) }
+          />
 
-            <Route path="/search" component={ Search } />
+          <Route path="/search" component={ () => <Search userName={ userName } /> } />
 
-            <Route path="/album/:id" component={ Album } />
+          <Route path="/album/:id" component={ Album } />
 
-            <Route path="/favorites" component={ Favorites } />
+          <Route path="/favorites" component={ Favorites } />
 
-            <Route path="/profile/edit" component={ ProfileEdit } />
+          <Route path="/profile/edit" component={ ProfileEdit } />
 
-            <Route path="/profile" component={ Profile } />
+          <Route path="/profile" component={ Profile } />
 
-            <Route path="*" component={ NotFound } />
-          </Switch>
-        </BrowserRouter>
-      </>
+          <Route path="*" component={ NotFound } />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
