@@ -89,6 +89,7 @@ class Search extends Component {
           <>
             <p>
               Resultado de álbuns de:
+              {' '}
               {artist}
             </p>
             <div className="search-results">{this.rendersSearchResults()}</div>
