@@ -48,14 +48,10 @@ class App extends React.Component {
     );
   };
 
-  seeMoreOnClick = (collectionId) => {
-    this.setState({ collectionId });
-  };
-
   renderRedirect = () => <Redirect to="/search" />;
 
   render() {
-    const { loading, redirect, collectionId } = this.state;
+    const { loading, redirect } = this.state;
 
     return (
       <BrowserRouter>
@@ -81,7 +77,7 @@ class App extends React.Component {
 
           <Route
             path="/album/:id"
-            render={ () => <Album collectionId={ collectionId } /> }
+            render={ (props) => <Album { ...props } /> }
           />
 
           <Route path="/favorites" component={ Favorites } />

@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid';
-import propTypes from 'prop-types';
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import SearchResults from '../components/SearchResults';
@@ -14,11 +13,6 @@ class Search extends Component {
     loading: false,
     searchInputValue: '',
   };
-
-  componentDidMount() {
-    const { seeMoreOnClick } = this.props;
-    this.setState(seeMoreOnClick);
-  }
 
   onNameInputChange = (event) => {
     const { value } = event.target;
@@ -46,7 +40,6 @@ class Search extends Component {
 
   rendersSearchResults = () => {
     const { searchResults } = this.state;
-    const { seeMoreOnClick } = this.props;
     if (searchResults === NO_RESULTS_FOUND) {
       return <p>Nenhum álbum foi encontrado</p>;
     }
@@ -54,7 +47,6 @@ class Search extends Component {
       <SearchResults
         key={ nanoid() }
         { ...item }
-        seeMoreOnClick={ seeMoreOnClick }
       />
     ));
   };
@@ -99,9 +91,5 @@ class Search extends Component {
     );
   }
 }
-
-Search.propTypes = {
-  seeMoreOnClick: propTypes.func.isRequired,
-};
 
 export default Search;

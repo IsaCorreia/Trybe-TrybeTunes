@@ -9,7 +9,6 @@ class SearchResults extends Component {
       collectionId,
       collectionName,
       artworkUrl100,
-      seeMoreOnClick,
     } = this.props;
     return (
       <div className="album-card">
@@ -19,7 +18,6 @@ class SearchResults extends Component {
         <Link
           data-testid={ `link-to-album-${collectionId}` }
           to={ `/album/${collectionId}` }
-          onClick={ () => seeMoreOnClick(collectionId) }
         >
           Ver mais
         </Link>
@@ -33,7 +31,6 @@ SearchResults.propTypes = {
   collectionId: propTypes.number.isRequired,
   collectionName: propTypes.string.isRequired,
   artworkUrl100: propTypes.string.isRequired,
-  seeMoreOnClick: propTypes.func.isRequired,
 };
 
 export default SearchResults;

@@ -1,4 +1,4 @@
-import propTypes from 'prop-types';
+import propTypes, { objectOf, oneOfType } from 'prop-types';
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
@@ -9,9 +9,11 @@ class Album extends Component {
   state = { loading: false, tracksInfo: [], albumInfo: {} };
 
   async componentDidMount() {
-    const { collectionId } = this.props;
-    const collectionInfo = await getMusics(collectionId);
-    this.getsAlbum(collectionInfo);
+    const { match: { params: { id } } } = this.props;
+    const collectionInfo = await getMusics(id);
+    // this.getsAlbum(collectionInfo);
+    const tracksInfo = collectionInfo.slice(1);
+    this.setState({ albumInfo: collectionInfo[0], tracksInfo });
   }
 
   getsAlbum = (collectionInfo) => {
@@ -28,72 +30,50 @@ class Album extends Component {
     this.setState({ loading: change });
   }
 
-  // rendersAlbumInfo = () => {
-  //   const { albumInfo } = this.state;
-  //   return (
-  //     <>
-  //       <p data-testid="artist-name">{albumInfo.artistName}</p>
-  //       <img src={ albumInfo.artworkUrl100 } alt={ albumInfo.collectionName } />
-
-  //       <p data-testid="album-name">{albumInfo.collectionName}</p>
-  //     </>
-  //   );
-  // };
-
-  // rendersMusics = () => {
-  //   const { tracksInfo } = this.state;
-  //   return tracksInfo.map((item) => (
-  //     <MusicCard
-  //       key={ item.trackId }
-  //       { ...item }
-  //       onCheckedHandler={ this.onCheckedHandler }
-  //     />
-  //   ));
-  // };
-
   render() {
     const { albumInfo, tracksInfo, loading } = this.state;
     return (
       <>
         <Header />
         <h1>Album 🎵</h1>
-        {loading && <Loading />}
-        {!loading && (
-          <div data-testid="page-album">
-            <div className="collection-info">
-              {albumInfo && (
-                // this.rendersAlbumInfo()
-                <>
-                  <p data-testid="artist-name">{albumInfo.artistName}</p>
-                  <img
-                    src={ albumInfo.artworkUrl100 }
-                    alt={ albumInfo.collectionName }
-                  />
+        <div data-testid="page-album">
+          <div className="collection-info">
+            {/* {albumInfo && ( */}
+            <p data-testid="artist-name">{albumInfo && albumInfo.artistName}</p>
+            {/* <img
+              src={ albumInfo.artworkUrl100 }
+              alt={ albumInfo.collectionName }
+            /> */}
 
-                  <p data-testid="album-name">{albumInfo.collectionName}</p>
-                </>
-              )}
-            </div>
-            <div className="musics">
-              {
-                tracksInfo.map((item) => (
-                  <MusicCard
-                    key={ item.trackId }
-                    item={ item }
-                    loadingChange={ this.loadingChange }
-                  />
-                ))
-              }
-            </div>
+            <p data-testid="album-name">{albumInfo && albumInfo.collectionName}</p>
+            {/* )} */}
           </div>
-        )}
+          <div className="musics">
+            {loading && <Loading />}
+            {
+              tracksInfo.map((item) => (
+                <MusicCard
+                  key={ item.trackId }
+                  item={ item }
+                  loadingChange={ this.loadingChange }
+                />
+              ))
+            }
+          </div>
+        </div>
       </>
     );
   }
 }
 
 Album.propTypes = {
-  collectionId: propTypes.number.isRequired,
+  match: propTypes.objectOf(oneOfType([
+    propTypes.bool,
+    propTypes.string,
+    objectOf(oneOfType([
+      propTypes.string,
+    ])),
+  ])).isRequired,
 };
 
 export default Album;
