@@ -33,8 +33,8 @@ class MusicCard extends Component {
       this.setState({ isChecked: true });
     } else {
       await removeSong(item);
-      this.isCheckboxClean();
-      // this.setState({ isChecked: false });
+      // this.isCheckboxClean();
+      this.setState({ isChecked: false });
     }
     loadingChange(false);
   };
