@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import { getFavoriteSongs } from '../services/favoriteSongsAPI';
-import Loading from './Loading';
 
 class Favorites extends Component {
   state = {
-    loading: false,
+    // loading: false,
     favTracks: [],
   };
 
@@ -15,29 +14,28 @@ class Favorites extends Component {
     this.renderFavorites();
   }
 
-  loadingChange = (change) => {
-    this.renderFavorites();
-    this.setState({ loading: change });
-  }
-
   renderFavorites = async () => {
-    this.setState({ loading: true });
+    // this.setState({ loading: true });
     const favs = await getFavoriteSongs();
-    this.setState({ favTracks: favs }, () => this.setState({ loading: false }));
+    this.setState({ favTracks: favs });
   };
 
+  changeTracks = (changedArr) => {
+    this.setState({ favTracks: changedArr });
+  }
+
   render() {
-    const { loading, favTracks } = this.state;
+    const { favTracks } = this.state;
     return (
       <div data-testid="page-favorites">
         <Header />
         <h1>Favoritos ⭐</h1>
-        {loading && <Loading />}
         {favTracks.map((item) => (
           <MusicCard
             key={ item.trackId }
             item={ item }
-            loadingChange={ this.loadingChange }
+            renderFavorites={ this.renderFavorites }
+            changeTracks={ this.changeTracks }
           />
         ))}
       </div>

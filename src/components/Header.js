@@ -36,9 +36,10 @@ class Header extends Component {
             <Link to="/search" data-testid="link-to-search">Pesquisar</Link>
             <Link to="/favorites" data-testid="link-to-favorites">Favoritos</Link>
             <Link to="/profile" data-testid="link-to-profile">Perfil</Link>
-            <p data-testid="header-user-name">
+            <p>
               Olá,
-              {userName}
+              {' '}
+              <span data-testid="header-user-name">{userName}</span>
             </p>
           </>
         )}

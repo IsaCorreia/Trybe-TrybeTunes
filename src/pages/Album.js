@@ -56,6 +56,7 @@ class Album extends Component {
                   key={ item.trackId }
                   item={ item }
                   loadingChange={ this.loadingChange }
+                  changeTracks={ () => {} }
                 />
               ))
             }
